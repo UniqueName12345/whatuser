@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>WhatUser | A Scratch user guessing game</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script href="game.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1>WhatUser</h1>
+      </div>
+    </div>
+    <p class="instructions">In the game "WhatUser," the objective is to input a random username into the provided text box and receive points based on the system's detection of the user's status. The game operates as follows:
+
+Input a Random Username: To begin, the player must enter a completely random username into the designated text box. This username can consist of any combination of letters, numbers, or symbols, but it must be entirely arbitrary to maintain the randomness of the game.
+
+User Detection: The system will then perform a real-time check to determine the status of the entered username. There are two possible outcomes:
+
+a. User Exists and is Active: If the system detects that the username exists and is not deleted or banned, the player will earn one point.
+
+c. User Doesn't Exist: If the system cannot find any record of the entered username, the player will lose one point.
+
+Scoring: The player's score will be calculated based on the outcomes mentioned above. The game can be played for a set number of rounds or until a specified time limit is reached.
+
+The goal of "WhatUser" is to accumulate as many points as possible by accurately guessing the status of randomly generated usernames. It requires a combination of luck and deduction, making it an engaging and challenging game for users.</p>
+    </p>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <form>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Username">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div id="results">
+          <h2>Results</h2>
+          <p>Score: <span id="score"></span></p>
+          <p>Points: <span id="points"></span></p>
+        </div>
+      </div>
+
+      <script>
+        // when username is entered and submit button is pressed
+        $("#username").keyup(function() {
+          // get username from text box
+          var username = $("#username").val();
+          // if username is not empty
+          if (username) {
+            checkIfUserExistsOnScratch(username);
+            // if username does indeed exist
+            if (checkIfUserExistsOnScratch(username) === "Exists") {
+              addEventToResultsList(username, "Exists");
+              modifyScore("plus", 1);
+            }
+            // if username does not exist
+            else {
+              addEventToResultsList(username, "Doesn't Exist");
+              modifyScore("minus", 1);
+            }
+          } else {
+            // if username is empty
+            alert("Please enter a username");
+          }
+          }
+        });
+      </script>
+</body>
